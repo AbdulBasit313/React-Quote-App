@@ -10,8 +10,12 @@ class Quote extends Component {
       super(props)
       this.state = {
          quote: '',
-         author: ''
+         author: '',
+         previousQuote: '',
+         previousAuthor: '',
       }
+      this.getNewQuote = this.getNewQuote.bind(this)
+      this.prevQuote = this.prevQuote.bind(this)
    }
 
    componentDidMount() {
@@ -26,17 +30,29 @@ class Quote extends Component {
             let data = res.data.quotes
             let quoteNum = Math.floor(Math.random() * data.length)
             let randomQuote = data[quoteNum]
-            // let randomQuote = data[Math.floor(Math.random() * data.length)]
 
-            this.setState({
-               quote: randomQuote['quote'],
-               author: randomQuote['author']
+            this.setState(prevState => {
+               return ({
+                  quote: randomQuote['quote'],
+                  author: randomQuote['author'],
+                  previousQuote: prevState.quote,
+                  previousAuthor: prevState.author,
+               })
             })
+            console.log('quote', this.state.quote)
+            console.log('previousQuote', this.state.previousQuote)
          })
    }
 
-   getNewQuote = () => {
+   getNewQuote() {
       this.getQuote()
+   }
+
+   prevQuote() {
+      this.setState({
+         quote: this.state.previousQuote,
+         author: this.state.previousAuthor,
+      })
    }
 
    render() {
@@ -53,7 +69,10 @@ class Quote extends Component {
                      <TwitterShare quote={quote} author={author} />
                      <WhatsAppShare quote={quote} author={author} />
                   </div>
-                  <Button id='new-quote' title='New Quote' onClick={this.getNewQuote} />
+                  <div className='quote-button'>
+                     <Button id='prev-quote' title='Previous Quote' onClick={this.prevQuote} />
+                     <Button id='new-quote' title='New Quote' onClick={this.getNewQuote} />
+                  </div>
                </div>
             </div>
          </div>
