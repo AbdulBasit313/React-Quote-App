@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Intro
+A simple quote app built in react, where you can get new quote and share the quote on whatsapp and twitter.
+
+## Result
+![](src/assets/images/react-quote-app.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
